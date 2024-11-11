@@ -50,17 +50,36 @@ function findUserByEmailRepository(email) {
   });
 }
 
-function findAllUsersRepository() {
+function findUserByIdRepository(id) {
   return new Promise((res, rej) => {
-    db.all("SELECT * from users"),
-      [],
-      (err, rows) => {
+    db.get(
+      `
+            SELECT id, username, email, avatar, password
+            FROM users 
+            WHERE id = ?
+            `,
+      [id],
+      (err, row) => {
         if (err) {
           rej(err);
         } else {
-          res(rows);
+          res(row);
         }
-      };
+      }
+    );
+  });
+}
+
+function findAllUsersRepository() {
+  return new Promise((res, rej) => {
+    // Corrigido a ordem dos parâmetros e a sintaxe
+    db.all("SELECT * FROM users", [], (err, rows) => {
+      if (err) {
+        rej(err); // Rejeita a Promise em caso de erro
+      } else {
+        res(rows); // Resolve a Promise com os dados
+      }
+    });
   });
 }
 function findUserByIdRespositoy(userId) {
@@ -119,4 +138,5 @@ export default {
   updateUserRepository,
   findUserByIdRespositoy,
   deleteUserRepositoty,
+  findUserByIdRepository,
 };

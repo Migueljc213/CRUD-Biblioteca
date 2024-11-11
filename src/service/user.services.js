@@ -21,7 +21,14 @@ async function createUserService(newUser) {
 async function findUserByEmailService(email) {
   const user = await userRepository.findUserByEmailRepository(email);
   if (!user) {
-    throw new Error("USer alredy exists!");
+    throw new Error("User alredy exists!");
+  }
+  return user;
+}
+async function findUserByIdService(id) {
+  const user = await userRepository.findUserByIdRepository(id);
+  if (!user) {
+    throw new Error("User alredy exists!");
   }
   return user;
 }
@@ -57,4 +64,5 @@ export default {
   updateUserService,
   deleteUserService,
   findUserByEmailService,
+  findUserByIdService,
 };

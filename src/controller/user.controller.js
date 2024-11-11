@@ -15,7 +15,7 @@ async function createUserController(req, res) {
 async function findAllUsersController(req, res) {
   try {
     const users = await userServices.findAllUsersService();
-    return res.send({ users });
+    return res.status(200).send({ users });
   } catch (error) {
     return res.status(404).send(error.message);
   }
