@@ -39,17 +39,28 @@ async function updateBookController(req, res) {
 
 async function deleteBookControler(req, res) {
   const bookId = req.params.id;
-    const userId = req.userId;
-    
-    try {
-        const response = await bookServices.deleteBookService(bookId, userId)
-    } catch (error) {
-        res.status(400).send(error.message)
-    }
+  const userId = req.userId;
+
+  try {
+    const response = await bookServices.deleteBookService(bookId, userId);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+}
+
+async function searchBookController(req, res) {
+  const { search } = req.query;
+  try {
+    const books = await bookServices.searchBookService(search);
+    res.status(200).send(books);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
 }
 export default {
   createBookController,
   findAllBooksController,
   updateBookController,
   deleteBookControler,
+  searchBookController,
 };

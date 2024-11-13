@@ -38,7 +38,7 @@ function findAllBookRespository() {
 }
 
 function findByIdBookRespository(id) {
-  return new Promise((reject, resolve) => {
+  return new Promise((resolve, reject) => {
     db.get(`SELECT * FROM books WHERE id = ?`, [id], (error, row) => {
       if (error) {
         reject(error);
@@ -50,7 +50,7 @@ function findByIdBookRespository(id) {
 }
 
 function updateBookRespository(bookId, updatedBook) {
-  return new Promise((reject, resolve) => {
+  return new Promise((resolve, reject) => {
     const fields = ["title", "author", "userId"];
     let query = `UPADATE books SET`;
     const values = [];
@@ -77,7 +77,7 @@ function updateBookRespository(bookId, updatedBook) {
   });
 }
 function deleteBookRespository(id) {
-  return new Promise((reject, resolve) => {
+  return new Promise((resolve, reject) => {
     db.run(`DELETE FROM books WHERE id = ?`, [id], (error) => {
       if (error) {
         reject(error);
@@ -87,10 +87,28 @@ function deleteBookRespository(id) {
     });
   });
 }
+
+function searchBookRespository(search) {
+  return new Promise((resolve, reject) => {
+    db.all(
+      `
+        SELECT * FROM books WHERE title LIKE ? OR author LIKE ?`,
+      [`%${search}%`, `%${search}%`],
+      (err, rows) => {
+        if (err) {
+          reject(err.message);
+        } else {
+          resolve(rows);
+        }
+      }
+    );
+  });
+}
 export default {
   createBookRespository,
   findAllBookRespository,
   findByIdBookRespository,
   deleteBookRespository,
   updateBookRespository,
+  searchBookRespository,
 };
