@@ -6,11 +6,10 @@ import { authMiddleware } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
-router.post('/users', validate(userSchema) , userController.createUserController);
-router.post('/users/login', userController.loginUserController);
-router.get('/users', authMiddleware , userController.findAllUsersController);
-router.get('/users' , userController.findAllUsersController);
-router.patch('/users/:id', userController.updateUserController);
-router.delete('/users/delete/:id', userController.deleteUserController);
+router.post('/', validate(userSchema) , userController.createUserController);
+router.post('/login', userController.loginUserController);
+router.get('/', authMiddleware , userController.findAllUsersController);
+router.patch('/:id', userController.updateUserController);
+router.delete('/:id', userController.deleteUserController);
 
 export default router;

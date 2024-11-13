@@ -46,8 +46,9 @@ async function deleteUserController(req, res) {
 async function loginUserController(req, res) {
   const { email, password } = req.body;
   try {
+    console.log(req.body);
     const token = await loginService(email, password);
-    res.status(201).send({ token });
+    res.status(200).send({ token });
   } catch (error) {
     res.status(400).send({ message: error.message });
   }
