@@ -4,6 +4,7 @@ import express from 'express';
 import userRouters from './src/routes/user.routes.js'
 import bookRouters from "./src/routes/book.routes.js";
 import loanRouters from "./src/routes/loan.routes.js";
+import "./src/service/cron.service.js";
 const app = express();
 
 app.use(express.json());
